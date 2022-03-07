@@ -9,6 +9,8 @@ class IAMAT(object):
 
   @staticmethod
   def fromParts(parts):
+    if len(parts) > 3:
+      raise ValueError("Invalid IAMAT parts")
     id = parts[0]
     lat, lng = decodeIso6709(parts[1])
     clientTime = float(parts[2])
@@ -44,7 +46,7 @@ class AT(IAMAT):
     return self.serverTime - self.time
   
   def __str__(self):
-    return 'AT ' + self.serverId + ' ' + floatToStr(self.timeDiff) + \
+    return 'AT ' + self.serverId + ' ' + floatToStr(self.timeDiff, True) + \
       ' ' + self.id + \
       ' ' + floatToStr(self.lat, True) + floatToStr(self.lng, True) + \
       ' ' + floatToStr(self.time) + \
